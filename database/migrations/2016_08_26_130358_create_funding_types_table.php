@@ -16,8 +16,6 @@ class CreateFundingTypesTable extends Migration
         Schema::create('funding_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->decimal('amount',10,4);
-            $table->string('agreement');
 
             $table->timestamps();
             $table->softDeletes();

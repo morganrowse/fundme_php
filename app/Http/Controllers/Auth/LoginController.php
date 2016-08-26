@@ -2,38 +2,39 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    use ThrottlesLogins;
 
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function login()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        return view('auth.login');
+    }
+
+    public function handleLogin(Request $request)
+    {
+        $post = $request->all();
+
+        $rules = [
+            'email' => 'required|email|max:255',
+            'password' => 'required',
+        ];
+        $valid = Validator::make($post, $rules);
+
+        if (!$valid->passes()) {
+            return back()->withErrors($valid);
+        }
+
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $request->input('remember'))) {
+            return redirect()->intended('home')->with('flash_success', trans('string.successful_login'));
+        } else {
+            return back()->with('flash_danger', trans('string.incorrect_user_password').' '.$request->input('remember'));
+        }
     }
 }

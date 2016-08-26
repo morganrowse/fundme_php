@@ -10,6 +10,13 @@
                 <div class="panel-body">
                     You are logged in!
                 </div>
+
+                <div class="row">
+                    <div class="col-md-3 card">
+                        @include('applications.dashboard')
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

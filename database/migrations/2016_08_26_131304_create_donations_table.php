@@ -19,6 +19,8 @@ class CreateDonationsTable extends Migration
             $table->integer('donation_profile_id')->unsigned();
             $table->foreign('application_id')->references('id')->on('applications');
             $table->foreign('donation_profile_id')->references('id')->on('donation_profiles');
+            $table->decimal('amount',10,4);
+            $table->string('agreement');
 
             $table->timestamps();
             $table->softDeletes();

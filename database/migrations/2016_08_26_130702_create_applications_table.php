@@ -23,7 +23,7 @@ class CreateApplicationsTable extends Migration
             $table->string('degree_type');
             $table->string('financial_means');
             $table->decimal('amount',10,4);
-            $table->tinyInteger('application_status')->unsigned();
+            $table->tinyInteger('application_status')->unsigned()->default(0);
 
             $table->timestamps();
             $table->softDeletes();
