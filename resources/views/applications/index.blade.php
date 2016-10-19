@@ -52,7 +52,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <th><em>{{trans('string.no_data')}}</em></th>
+                        <th colspan="100%"><em>{{trans('string.no_data')}}</em></th>
                     </tr>
                 @endforelse
                 </tbody>
