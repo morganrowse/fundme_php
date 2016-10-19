@@ -27,3 +27,31 @@ Route::group(['prefix' => 'applications'], function () {
 
     Route::post('delete/{application}', 'ApplicationController@handleDelete')->name('applications/delete');
 });
+
+Route::group(['prefix' => 'applicants'], function () {
+    Route::model('applicant', 'App\Applicant');
+
+    Route::get('', 'ApplicantController@index')->name('applicants');
+
+    Route::get('create', 'ApplicantController@create')->name('applicants/create');
+    Route::post('create', 'ApplicantController@handleCreate');
+
+    Route::get('edit/{applicant}', 'ApplicantController@edit')->name('applicants/edit');
+    Route::post('edit/{applicant}', 'ApplicantController@handleEdit');
+
+    Route::post('delete/{applicant}', 'ApplicantController@handleDelete')->name('applicants/delete');
+});
+
+Route::group(['prefix' => 'donors'], function () {
+    Route::model('donor', 'App\Donor');
+
+    Route::get('', 'DonorController@index')->name('donors');
+
+    Route::get('create', 'DonorController@create')->name('donors/create');
+    Route::post('create', 'DonorController@handleCreate');
+
+    Route::get('edit/{donor}', 'DonorController@edit')->name('donors/edit');
+    Route::post('edit/{donor}', 'DonorController@handleEdit');
+
+    Route::post('delete/{donor}', 'DonorController@handleDelete')->name('donors/delete');
+});
