@@ -16,6 +16,14 @@
                         @include('applications.dashboard')
                     </div>
 
+                    <div class="col-md-3 card">
+                        @include('applicants.dashboard')
+                    </div>
+
+                    <div class="col-md-3 card">
+                        @include('donors.dashboard')
+                    </div>
+
                 </div>
             </div>
         </div>
