@@ -28,10 +28,10 @@
                 <th>{{trans('string.institution_name')}}</th>
                 <th>{{trans('string.degree_type')}}</th>
                 <th>{{trans('string.financial_means')}}</th>
-                <th>{{trans('string.amount')}}</th>
+                <th style="min-width: 220px">{{trans('string.amount')}}</th>
                 <th class="text-right">{{trans('string.updated')}}</th>
                 <th>{{trans('string.status')}}</th>
-                <th>{{trans('string.actions')}}</th>
+                <th style="min-width: 236px">{{trans('string.actions')}}</th>
             </tr>
             </thead>
             <tbody>
@@ -44,12 +44,12 @@
                     <td>{!! $application->getFundedProgressBar() !!}</td>
                     <td class="text-right">{{$application->updated_at->diffForHumans()}}</td>
                     <td>{!!$application->getStatusLabel()!!}</td>
-                    <td style="min-width: 218px">
+                    <td>
                         {{Form::open(['route'=>array('applications/delete',$application->id),'method'=>'POST'])}}
                         <div class="btn-toolbar">
                             <div class="btn-group btn-group-sm">
                                 <a href="{{route('applications/view',$application->id)}}" class="btn btn-primary">
-                                    {{trans('string.view')}}
+                                    <i class="fa fa-eye"></i> {{trans('string.view')}}
                                 </a>
                             </div>
                             <div class="btn-group btn-group-sm">

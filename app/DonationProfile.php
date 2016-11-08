@@ -15,6 +15,10 @@ class DonationProfile extends Model
         return $this->belongsTo('App\Donor');
     }
 
+    public function donation(){
+        return $this->hasMany('App\Donation');
+    }
+
     public function fundingType(){
         return $this->belongsTo('App\FundingType');
     }

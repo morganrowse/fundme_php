@@ -15,4 +15,9 @@ class Donor extends Model
     {
         return $this->belongsTo('App\Administrator');
     }
+
+    public function donationProfile()
+    {
+        return $this->hasMany('App\DonationProfile');
+    }
 }

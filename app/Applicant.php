@@ -21,15 +21,6 @@ class Applicant extends Model
         return $this->hasMany('App\Documentation');
     }
 
-    public function hasUploadedDocumentation()
-    {
-        if($this->documentation()->count()>0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function getStatusLabel(){
         if($this->documentation()->count()>0){
             return '<span class="tag tag-pill tag-success">'.trans('string.green').'</span>';
