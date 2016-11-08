@@ -4,18 +4,20 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
 
-            <h1>@yield('title')</h1>
+        <div class="card card-outline-primary">
+            <div class="card-block card-inverse card-primary">
+                <h2 class="card-title">@yield('title')</h2>
+            </div>
+            <div class="card-block">
+                <a href="{{route('applicants/create')}}" class="btn btn-success">{{trans('string.new_applicant')}}</a>
+            </div>
+        </div>
 
-            <hr>
+        <br>
 
-            <a href="{{route('applicants/create')}}" class="btn btn-primary">{{trans('string.new_applicant')}}</a>
-
-            <br>
-            <br>
-
-            <table class="table table-bordered table-striped">
+        <div class="table-responsive">
+            <table class="table table-inverse table-striped table-hover">
                 <thead>
                 <tr>
                     <th>{{trans('string.first_name')}}</th>
@@ -38,16 +40,19 @@
                         <td>{{$applicant->student_number}}</td>
                         <td class="text-right">{{$applicant->updated_at->diffForHumans()}}</td>
                         <td>{!!$applicant->getStatusLabel()!!}</td>
-                        <td>
-                            <a href="{{route('applicants/edit',$applicant->id)}}" class="btn btn-xs btn-warning">
-                                {{trans('string.edit')}}
-                            </a>
-                            <div style="float: right; clear: both">
-                                {{Form::open(['route'=>array('applicants/delete',$applicant->id),'method'=>'POST'])}}
-                                {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
-                                {{Form::close()}}
+                        <td style="min-width: 140px">
+                            {{Form::open(['route'=>array('applicants/delete',$applicant->id),'method'=>'POST'])}}
+                            <div class="btn-toolbar">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{route('applicants/edit',$applicant->id)}}" class="btn btn-warning">
+                                        {{trans('string.edit')}}
+                                    </a>
+                                </div>
+                                <div class="btn-group btn-group-sm">
+                                    {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                </div>
                             </div>
-
+                            {{Form::close()}}
                         </td>
                     </tr>
                 @empty
@@ -58,5 +63,6 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 @endsection

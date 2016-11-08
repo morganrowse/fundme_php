@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Http\Requests;
+use Carbon\Carbon;
 
 class ApplicantController extends Controller
 {
@@ -98,7 +99,7 @@ class ApplicantController extends Controller
             'last_name' => 'required|max:255',
             'student_number' => 'required|max:255',
             'cellphone' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,id,'.$applicant->id,
+            'email' => 'required|email|max:255|unique:users,id,' . $applicant->id,
 
             'address_line_1' => 'max:255',
             'address_line_2' => 'max:255',
@@ -130,6 +131,19 @@ class ApplicantController extends Controller
 
     public function handleDelete(Applicant $applicant)
     {
-        //
+        $applicant->user->delete();
+        $applicant->delete();
+
+        return redirect()->route('applicants')->with('flash_success', trans('string.delete_applicant_success'));
+    }
+
+    public static function getDashboardString()
+    {
+        $new_count = Applicant::where('created_at','>', Carbon::now()->subDay())->count();
+        if($new_count!=0){
+            return $new_count.' new '.trans_choice('string.applicant',$new_count).'.';
+        } else {
+            return "No new applicants.";
+        }
     }
 }

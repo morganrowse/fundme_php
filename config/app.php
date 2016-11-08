@@ -228,5 +228,7 @@ return [
 
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Fundme' => App\Fundme::class,
+        'Carbon' => Carbon\Carbon::class,
     ],
 ];

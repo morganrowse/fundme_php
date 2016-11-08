@@ -20,7 +20,7 @@ class CreateDonationsTable extends Migration
             $table->foreign('application_id')->references('id')->on('applications');
             $table->foreign('donation_profile_id')->references('id')->on('donation_profiles');
             $table->decimal('amount',10,4);
-            $table->string('agreement');
+            $table->string('agreement')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -48,11 +48,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => 'sql7.freemysqlhosting.net',
+            'host' => '197.242.144.92',
             'port' => '3306',
-            'database' => 'sql7140709',
-            'username' => 'sql7140709',
-            'password' => 'IRDNEGMWB7',
+            'database' => 'morgabew_fundme',
+            'username' => 'morgabew_admin',
+            'password' => 'P}5M{hOh#8p@',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',

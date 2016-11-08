@@ -3,11 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Administrator extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+
     public function user()
     {
-        return $this->morphOne('User', 'userable');
+        return $this->hasOne('App\User', 'userable_id');
     }
 }

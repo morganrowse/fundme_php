@@ -1,0 +1,24 @@
+body {
+    padding-top: 70px;
+    background-image:url("cartographer.png")
+}
+
+.card {
+    background-color: white;
+    overflow: hidden;
+}
+
+.dropdown {
+    cursor: pointer;
+}
+
+.card-dark {
+    background-color: darkgray;
+}
+
+.card-dashboard > .card-img {
+
+    width:100%;
+
+    filter: grayscale(100%) blur(4px) brightness(75%);
+}

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Requests;
+use Carbon\Carbon;
 
 class ApplicationController extends Controller
 {
@@ -64,9 +65,13 @@ class ApplicationController extends Controller
         return redirect()->route('applications')->with('flash_success', trans('string.new_application_success'));
     }
 
-    public function view($id)
+    public function view(Application $application)
     {
-        //
+        $parameters = [
+            'application' => $application,
+        ];
+
+        return view('applications.view')->with($parameters);
     }
 
     public function edit(Application $application)
@@ -113,6 +118,18 @@ class ApplicationController extends Controller
 
     public function handleDelete(Application $application)
     {
-        //
+        $application->delete();
+
+        return redirect()->route('applications')->with('flash_success', trans('string.delete_application_success'));
+    }
+
+    public static function getDashboardString()
+    {
+        $new_count = Application::where('created_at','>', Carbon::now()->subDay())->count();
+        if($new_count!=0){
+            return $new_count.' new '.trans_choice('string.application',$new_count).'.';
+        } else {
+            return "No new applications.";
+        }
     }
 }

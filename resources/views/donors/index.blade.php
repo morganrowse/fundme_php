@@ -4,46 +4,53 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
 
-            <h1>@yield('title')</h1>
+        <div class="card card-outline-primary">
+            <div class="card-block card-inverse card-primary">
+                <h2 class="card-title">@yield('title')</h2>
+            </div>
+            <div class="card-block">
+                <a href="{{route('donors/create')}}" class="btn btn-success">{{trans('string.new_donor')}}</a>
+            </div>
+        </div>
 
-            <hr>
+        <br>
 
-            <a href="{{route('donors/create')}}" class="btn btn-primary">{{trans('string.new_donor')}}</a>
-
-            <br>
-            <br>
-
-            <table class="table table-bordered table-striped">
+        <div class="table-responsive">
+            <table class="table table-inverse table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>{{trans_choice('string.funding_type',1)}}</th>
-                    <th>{{trans('string.institution_name')}}</th>
-                    <th>{{trans('string.degree_type')}}</th>
-                    <th>{{trans('string.financial_means')}}</th>
-                    <th class="text-right">{{trans('string.amount')}}</th>
+                    <th>{{trans('string.first_name')}}</th>
+                    <th>{{trans('string.last_name')}}</th>
+                    <th>{{trans('string.email')}}</th>
+                    <th>{{trans('string.organisation')}}</th>
+                    <th>{{trans_choice('string.administrator',1)}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
-                    <th>{{trans('string.status')}}</th>
                     <th>{{trans('string.actions')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($donors as $donor)
                     <tr>
-                        <td>{{$donor->name}}</td>
+                        <td>{{$donor->first_name}}</td>
+                        <td>{{$donor->last_name}}</td>
+                        <td>{{$donor->email}}</td>
+                        <td>{{$donor->organisation}}</td>
+                        <td>{{$donor->administrator->user->first_name}}, {{$donor->administrator->user->last_name}}</td>
                         <td class="text-right">{{$donor->updated_at->diffForHumans()}}</td>
-                        <td>{!!$donor->getStatusLabel()!!}</td>
-                        <td>
-                            <a href="{{route('donors/edit',$donor->id)}}" class="btn btn-xs btn-warning">
-                                {{trans('string.edit')}}
-                            </a>
-                            <div style="float: right; clear: both">
-                                {{Form::open(['route'=>array('applications/delete',$application->id),'method'=>'POST'])}}
-                                {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
-                                {{Form::close()}}
+                        <td style="min-width: 140px">
+                            {{Form::open(['route'=>array('donors/delete',$donor->id),'method'=>'POST'])}}
+                            <div class="btn-toolbar">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{route('donors/edit',$donor->id)}}" class="btn btn-warning">
+                                        {{trans('string.edit')}}
+                                    </a>
+                                </div>
+                                <div class="btn-group btn-group-sm">
+                                    {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                </div>
                             </div>
-
+                            {{Form::close()}}
                         </td>
                     </tr>
                 @empty
@@ -52,8 +59,8 @@
                     </tr>
                 @endforelse
                 </tbody>
-
             </table>
         </div>
+
     </div>
 @endsection
