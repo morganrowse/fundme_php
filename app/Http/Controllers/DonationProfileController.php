@@ -6,6 +6,7 @@ use App\Donor;
 use App\DonationProfile;
 use App\FundingType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Requests;
 use Carbon\Carbon;
@@ -25,8 +26,14 @@ class DonationProfileController extends Controller
 
     public function create()
     {
-        $donors = Donor::pluck('first_name', 'id');
-        $funding_types = FundingType::pluck('name', 'id');
+        $donors = Donor::
+        orderBy('first_name')
+            ->orderBy('last_name')
+            ->orderBy('organisation')
+            ->select('id', DB::raw('CONCAT(first_name, ", ", last_name, " - ", organisation) AS full_name'))
+            ->pluck('full_name', 'id');
+
+        $funding_types = FundingType::orderBy('name')->pluck('name', 'id');
         $financial_means = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E'];
 
         $parameters = [
@@ -71,7 +78,13 @@ class DonationProfileController extends Controller
 
     public function edit(DonationProfile $donation_profile)
     {
-        $donors = Donor::pluck('first_name', 'id');
+        $donors = Donor::
+        orderBy('first_name')
+            ->orderBy('last_name')
+            ->orderBy('organisation')
+            ->select('id', DB::raw('CONCAT(first_name, ", ", last_name, " - ", organisation) AS full_name'))
+            ->pluck('full_name', 'id');
+
         $funding_types = FundingType::pluck('name', 'id');
         $financial_means = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E'];
 
@@ -119,9 +132,9 @@ class DonationProfileController extends Controller
 
     public static function getDashboardString()
     {
-        $new_count = DonationProfile::where('created_at','>', Carbon::now()->subDay())->count();
-        if($new_count!=0){
-            return $new_count.' new '.trans_choice('string.donation_profile',$new_count).'.';
+        $new_count = DonationProfile::where('created_at', '>', Carbon::now()->subDay())->count();
+        if ($new_count != 0) {
+            return $new_count . ' new ' . trans_choice('string.donation_profile', $new_count) . '.';
         } else {
             return "No new donation profiles.";
         }
