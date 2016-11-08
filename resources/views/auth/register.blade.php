@@ -1,10 +1,12 @@
+@section('title') {{trans('string.register')}} @endsection
+
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="card card-outline-primary">
             <div class="card-block card-inverse card-primary">
-                <h2 class="card-title">{{trans('string.register')}}</h2>
+                <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
                 <div class="col-lg-8 offset-lg-2">

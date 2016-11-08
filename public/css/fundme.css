@@ -22,3 +22,7 @@ body {
 
     filter: grayscale(100%) blur(4px) brightness(75%);
 }
+
+thead:hover {
+    cursor: pointer;
+}

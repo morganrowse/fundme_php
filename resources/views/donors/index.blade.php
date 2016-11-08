@@ -17,7 +17,7 @@
         <br>
 
         <div class="table-responsive">
-            <table class="table table-inverse table-striped table-hover">
+            <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
                     <th>{{trans('string.first_name')}}</th>

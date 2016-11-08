@@ -21,7 +21,7 @@
     <div class="container-fluid">
 
     <div class="table-responsive">
-        <table class="table table-inverse table-striped table-hover">
+        <table class="table table-inverse table-striped table-hover" id="main-table">
             <thead>
             <tr>
                 <th>{{trans_choice('string.funding_type',1)}}</th>

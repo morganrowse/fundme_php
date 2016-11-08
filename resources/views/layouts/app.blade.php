@@ -26,7 +26,11 @@
 <nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
     <div class="container">
 
-        <a class="navbar-brand mb-0" href="{{route('home')}}">Fundme</a>
+        @if(Auth::guest())
+            <a class="navbar-brand mb-0" href="{{route('/')}}">Fundme</a>
+        @else
+            <a class="navbar-brand mb-0" href="{{route('home')}}">Fundme</a>
+        @endif
 
         <div class="float-xs-right">
             <ul class="nav navbar-nav">
@@ -83,7 +87,14 @@
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 <script src="{{asset('public/js/tether.min.js')}}"></script>
 <script src="{{asset('public/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('public/js/tablesort.min.js')}}"></script>
 @yield('extra-js')
+
+<script>
+    if (document.getElementById('main-table') != null) {
+    new Tablesort(document.getElementById('main-table'));
+    }
+</script>
 
 </body>
 </html>

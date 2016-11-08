@@ -17,10 +17,10 @@
         <br>
 
         <div class="table-responsive">
-            <table class="table table-inverse table-striped table-hover">
+            <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
-                    <th>{{trans('string.name')}}</th>
+                    <th class="sort-header sort-down">{{trans('string.name')}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
                     <th>{{trans('string.actions')}}</th>
                 </tr>

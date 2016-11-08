@@ -1,3 +1,5 @@
+@section('title') {{trans('string.welcome')}} @endsection
+
 @extends('layouts.app')
 
 @section('content')
@@ -7,7 +9,7 @@
             <div class="col-lg-9">
                 <div class="card">
                     <div class="card-block card-inverse card-dark">
-                        <h2 class="card-title display-1">{{trans('string.welcome')}}</h2>
+                        <h2 class="card-title">{{trans('string.welcome')}}</h2>
                     </div>
                     <div class="card-block">
                         <h4>Changelog</h4>

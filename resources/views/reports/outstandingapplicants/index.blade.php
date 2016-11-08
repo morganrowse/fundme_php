@@ -17,7 +17,7 @@
         <br>
 
         <div class="table-responsive">
-            <table class="table table-inverse table-striped table-hover">
+            <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
                     <th class="text-right">{{trans('string.created')}}</th>
@@ -40,7 +40,7 @@
                         <td>{{$applicant->cellphone}}</td>
                         <td>{{$applicant->student_number}}</td>
                         <td>{!!$applicant->getStatusLabel()!!}</td>
-                        <td style="min-width: 140px">
+                        <td style="min-width: 165px">
                             {{Form::open(['route'=>array('applicants/delete',$applicant->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">
                                 <div class="btn-group btn-group-sm">

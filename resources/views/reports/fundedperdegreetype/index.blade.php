@@ -18,6 +18,7 @@
 
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
+        <br>
     </div>
 @endsection
 
@@ -28,12 +29,11 @@
         $(function () {
             Highcharts.chart('container', {
                 title: {
-                    text: 'Monthly Average Temperature',
-                    x: -20 //center
+                    text: '&nbsp;',
+                    useHTML: true,
                 },
                 subtitle: {
-                    text: 'Source: WorldClimate.com',
-                    x: -20
+                    text: null,
                 },
                 xAxis: {
                     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

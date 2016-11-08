@@ -21,7 +21,7 @@
     <div class="container-fluid">
 
         <div class="table-responsive">
-            <table class="table table-inverse table-striped table-hover">
+            <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
                     <th>{{trans('string.created')}}</th>
@@ -44,7 +44,7 @@
                         <td>{{$application->financial_means}}</td>
                         <td>{!! $application->getFundedProgressBar() !!}</td>
                         <td>{!!$application->getStatusLabel()!!}</td>
-                        <td style="min-width: 190px">
+                        <td style="min-width: 218px">
                             {{Form::open(['route'=>array('applications/delete',$application->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">
                                 <div class="btn-group btn-group-sm">
