@@ -26,7 +26,7 @@
                     <th>{{trans('string.organisation')}}</th>
                     <th>{{trans_choice('string.administrator',1)}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
-                    <th>{{trans('string.actions')}}</th>
+                    <th style="min-width: 236px">{{trans('string.actions')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,9 +38,14 @@
                         <td>{{$donor->organisation}}</td>
                         <td>{{$donor->administrator->user->first_name}}, {{$donor->administrator->user->last_name}}</td>
                         <td class="text-right">{{$donor->updated_at->diffForHumans()}}</td>
-                        <td style="min-width: 165px">
+                        <td>
                             {{Form::open(['route'=>array('donors/delete',$donor->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{route('donors/view',$donor->id)}}" class="btn btn-primary">
+                                        <i class="fa fa-eye"></i> {{trans('string.view')}}
+                                    </a>
+                                </div>
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{route('donors/edit',$donor->id)}}" class="btn btn-warning">
                                         <i class="fa fa-pencil"></i> {{trans('string.edit')}}

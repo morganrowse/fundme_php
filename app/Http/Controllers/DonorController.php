@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DonationProfile;
 use DB;
 use App\Donor;
 use App\User;
@@ -69,9 +70,14 @@ class DonorController extends Controller
         return redirect()->route('donors')->with('flash_success', trans('string.new_donor_success'));
     }
 
-    public function view($id)
+    public function view(Donor $donor)
     {
-        //
+
+        $parameters = [
+            'donor' => $donor,
+        ];
+
+        return view('donors.view')->with($parameters);
     }
 
     public function edit(Donor $donor)

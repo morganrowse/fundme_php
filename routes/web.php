@@ -71,6 +71,7 @@ Route::group(['prefix' => 'donors'], function () {
     Route::model('donor', 'App\Donor');
 
     Route::get('', 'DonorController@index')->name('donors');
+    Route::get('view/{donor}', 'DonorController@view')->name('donors/view');
 
     Route::get('create', 'DonorController@create')->name('donors/create');
     Route::post('create', 'DonorController@handleCreate');
