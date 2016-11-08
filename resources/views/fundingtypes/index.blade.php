@@ -10,7 +10,7 @@
                 <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
-                <a href="{{route('fundingtypes/create')}}" class="btn btn-success">{{trans('string.new_funding_type')}}</a>
+                <a href="{{route('fundingtypes/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_funding_type')}}</a>
             </div>
         </div>
 
@@ -30,16 +30,18 @@
                     <tr>
                         <td>{{$funding_type->name}}</td>
                         <td class="text-right">{{$funding_type->updated_at->diffForHumans()}}</td>
-                        <td style="min-width: 140px">
+                        <td style="min-width: 165px">
                             {{Form::open(['route'=>array('fundingtypes/delete',$funding_type->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{route('fundingtypes/edit',$funding_type->id)}}" class="btn btn-warning">
-                                        {{trans('string.edit')}}
+                                        <i class="fa fa-pencil"></i> {{trans('string.edit')}}
                                     </a>
                                 </div>
                                 <div class="btn-group btn-group-sm">
-                                    {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                    <button type="submit" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i> {{trans('string.delete')}}
+                                    </button>
                                 </div>
                             </div>
                             {{Form::close()}}

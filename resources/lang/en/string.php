@@ -19,6 +19,7 @@ return [
     'degree_type' => 'Degree type',
     'delete' => 'Delete',
     'delete_applicant_success' => 'Applicant deleted successfully.',
+    'delete_administrator_success' => 'Administrator deleted successfully.',
     'delete_application_success' => 'Application deleted successfully.',
     'delete_donation_profile_success' => 'Donation profile deleted successfully.',
     'delete_donor_success' => 'Donor deleted successfully.',

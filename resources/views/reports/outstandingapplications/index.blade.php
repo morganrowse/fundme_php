@@ -54,11 +54,13 @@
                                 </div>
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{route('applications/edit',$application->id)}}" class="btn btn-warning">
-                                        {{trans('string.edit')}}
+                                        <i class="fa fa-pencil"></i> {{trans('string.edit')}}
                                     </a>
                                 </div>
                                 <div class="btn-group btn-group-sm">
-                                    {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                    <button type="submit" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i> {{trans('string.delete')}}
+                                    </button>
                                 </div>
                             </div>
                             {{Form::close()}}

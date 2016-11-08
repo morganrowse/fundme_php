@@ -10,7 +10,7 @@
                 <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
-                <a href="{{route('applications/create')}}" class="btn btn-success">{{trans('string.new_application')}}</a>
+                <a href="{{route('applications/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
                     <td>{!! $application->getFundedProgressBar() !!}</td>
                     <td class="text-right">{{$application->updated_at->diffForHumans()}}</td>
                     <td>{!!$application->getStatusLabel()!!}</td>
-                    <td style="min-width: 190px">
+                    <td style="min-width: 218px">
                         {{Form::open(['route'=>array('applications/delete',$application->id),'method'=>'POST'])}}
                         <div class="btn-toolbar">
                             <div class="btn-group btn-group-sm">
@@ -54,11 +54,13 @@
                             </div>
                             <div class="btn-group btn-group-sm">
                                 <a href="{{route('applications/edit',$application->id)}}" class="btn btn-warning">
-                                    {{trans('string.edit')}}
+                                    <i class="fa fa-pencil"></i> {{trans('string.edit')}}
                                 </a>
                             </div>
                             <div class="btn-group btn-group-sm">
-                                {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                <button type="submit" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash"></i> {{trans('string.delete')}}
+                                </button>
                             </div>
                         </div>
                         {{Form::close()}}

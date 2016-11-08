@@ -24,7 +24,9 @@
 
                     <div class="form-group row">
                             <a href="{{route('fundingtypes')}}" class="btn btn-default">{{trans('string.cancel')}}</a>
-                            {{Form::submit(trans('string.create'),['class'=>'btn btn-primary'])}}
+                        <button type="submit" class="btn btn-xs btn-primary">
+                            <i class="fa fa-plus"></i> {{trans('string.create')}}
+                        </button>
                         </div>
                     </div>
 

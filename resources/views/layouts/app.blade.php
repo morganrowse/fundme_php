@@ -35,13 +35,13 @@
                         <a class="nav-link" href="{{ url('/login') }}"><i class="fa fa-sign-in"></i> Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/register') }}">Register</a>
+                        <a class="nav-link" href="{{ url('/register') }}"><i class="fa fa-user-plus"></i> Register</a>
                     </li>
                 @else
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">Hi, {{Auth::user()->first_name }}</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{route('logout')}}">{{trans('string.logout')}}</a>
+                            <a class="dropdown-item" href="{{route('logout')}}"><i class="fa fa-sign-out"></i> {{trans('string.logout')}}</a>
                         </div>
                     </li>
                 @endif

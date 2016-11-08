@@ -59,7 +59,9 @@
 
                     <div class="form-group row">
                         <a href="{{route('donationprofiles')}}" class="btn btn-default">{{trans('string.cancel')}}</a>
-                        {{Form::submit(trans('string.edit'),['class'=>'btn btn-warning'])}}
+                        <button type="submit" class="btn btn-xs btn-warning">
+                            <i class="fa fa-pencil"></i> {{trans('string.edit')}}
+                        </button>
                     </div>
                 </div>
 

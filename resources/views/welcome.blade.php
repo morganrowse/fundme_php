@@ -12,6 +12,21 @@
                     <div class="card-block">
                         <h4>Changelog</h4>
                         <hr>
+                        <p><strong>2016-11-8</strong></p>
+                        <ul>
+                            <li>add application view page</li>
+                            <li>update status label functions to allow bootstrap 4 tags</li>
+                            <li>add applicant status functions</li>
+                            <li>add application progress functions</li>
+                            <li>finish updating crud layouts</li>
+                            <li>update home layout</li>
+                            <li>add outstanding applicants report and dashboard</li>
+                            <li>add outstanding applications report and dashboard</li>
+                            <li>add skeleton degree type performance report and dashboard</li>
+                            <li>extend master layout allowing additional css/js</li>
+                            <li>add documentation migration and model</li>
+                            <li>Update various iconography</li>
+                        </ul>
                         <p><strong>2016-11-7</strong></p>
                         <ul>
                             <li>add donation profiles</li>
@@ -22,7 +37,7 @@
                         <p><strong>2016-11-2</strong></p>
                         <ul>
                             <li>add funding types</li>
-                            <li>bootstrap update</li>
+                            <li>bootstrap 4 update</li>
                             <li>update forms, cards and headers</li>
                             <li>added favicon</li>
                             <li>init card overlays</li>

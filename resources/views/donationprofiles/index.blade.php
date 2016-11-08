@@ -10,7 +10,7 @@
                 <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
-                <a href="{{route('donationprofiles/create')}}" class="btn btn-success">{{trans('string.new_donation_profile')}}</a>
+                <a href="{{route('donationprofiles/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_donation_profile')}}</a>
             </div>
         </div>
 
@@ -36,16 +36,18 @@
                         <td>{{$donation_profile->financial_means}}</td>
                         <td>{{Fundme::getCurrency($donation_profile->maximum_amount)}}</td>
                         <td class="text-right">{{$donation_profile->updated_at->diffForHumans()}}</td>
-                        <td style="min-width: 140px">
+                        <td style="min-width: 165px">
                             {{Form::open(['route'=>array('donationprofiles/delete',$donation_profile->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{route('donationprofiles/edit',$donation_profile->id)}}" class="btn btn-warning">
-                                        {{trans('string.edit')}}
+                                        <i class="fa fa-pencil"></i> {{trans('string.edit')}}
                                     </a>
                                 </div>
                                 <div class="btn-group btn-group-sm">
-                                    {{Form::submit(trans('string.delete'),['class'=>'btn btn-xs btn-danger'])}}
+                                    <button type="submit" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i> {{trans('string.delete')}}
+                                    </button>
                                 </div>
                             </div>
                             {{Form::close()}}
