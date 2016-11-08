@@ -12,7 +12,7 @@ class FundingTypeController extends Controller
 {
     public function index()
     {
-        $funding_types = FundingType::orderBy('updated_at', 'desc')->get();
+        $funding_types = FundingType::orderBy('name')->get();
 
         $parameters = [
             'funding_types' => $funding_types,
