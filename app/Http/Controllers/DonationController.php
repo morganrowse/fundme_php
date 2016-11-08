@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Application;
 use App\DonationProfile;
 use App\Donation;
@@ -25,8 +26,28 @@ class DonationController extends Controller
 
     public function create()
     {
-        $applications = Application::pluck('id', 'id');
-        $donation_profiles = DonationProfile::pluck('id', 'id');
+        $applications = Application::
+        join('applicants','applications.applicant_id','=','applicants.id')
+            ->join('users', function ($join) {$join->on('applicants.id', '=', 'users.userable_id')->where('users.userable_type', '=', 'App\Applicant');})
+            ->join('funding_types','applications.funding_type_id','=','funding_types.id')
+            ->orderBy('users.first_name')
+            ->orderBy('users.last_name')
+            ->orderBy('funding_types.name')
+            ->orderBy('applications.institution_name')
+            ->orderBy('applications.degree_type')
+            ->orderBy('applications.financial_means')
+            ->select('applications.id AS id',DB::raw('CONCAT(users.first_name, ", ", users.last_name, " - ", funding_types.name, " - ", applications.institution_name, " - ", applications.degree_type, " - ", applications.financial_means) AS full_name'))
+            ->pluck('full_name', 'id');
+
+        $donation_profiles = DonationProfile::
+        join('donors','donation_profiles.donor_id','=','donors.id')
+            ->join('funding_types','donation_profiles.funding_type_id','=','funding_types.id')
+            ->orderBy('donors.first_name')
+            ->orderBy('donors.last_name')
+            ->orderBy('donors.organisation')
+            ->orderBy('funding_types.name')
+            ->select('donation_profiles.id AS id',DB::raw('CONCAT(donors.first_name, ", ", donors.last_name, " - ", donors.organisation, " - ", funding_types.name, " - ", donation_profiles.financial_means) AS full_name'))
+            ->pluck('full_name', 'id');
 
         $parameters = [
             'applications' => $applications,
@@ -73,8 +94,28 @@ class DonationController extends Controller
 
     public function edit(Donation $donation)
     {
-        $applications = Application::pluck('id', 'id');
-        $donation_profiles = DonationProfile::pluck('id', 'id');
+        $applications = Application::
+        join('applicants','applications.applicant_id','=','applicants.id')
+            ->join('users', function ($join) {$join->on('applicants.id', '=', 'users.userable_id')->where('users.userable_type', '=', 'App\Applicant');})
+            ->join('funding_types','applications.funding_type_id','=','funding_types.id')
+            ->orderBy('users.first_name')
+            ->orderBy('users.last_name')
+            ->orderBy('funding_types.name')
+            ->orderBy('applications.institution_name')
+            ->orderBy('applications.degree_type')
+            ->orderBy('applications.financial_means')
+            ->select('applications.id AS id',DB::raw('CONCAT(users.first_name, ", ", users.last_name, " - ", funding_types.name, " - ", applications.institution_name, " - ", applications.degree_type, " - ", applications.financial_means) AS full_name'))
+            ->pluck('full_name', 'id');
+
+        $donation_profiles = DonationProfile::
+        join('donors','donation_profiles.donor_id','=','donors.id')
+            ->join('funding_types','donation_profiles.funding_type_id','=','funding_types.id')
+            ->orderBy('donors.first_name')
+            ->orderBy('donors.last_name')
+            ->orderBy('donors.organisation')
+            ->orderBy('funding_types.name')
+            ->select('donation_profiles.id AS id',DB::raw('CONCAT(donors.first_name, ", ", donors.last_name, " - ", donors.organisation, " - ", funding_types.name, " - ", donation_profiles.financial_means) AS full_name'))
+            ->pluck('full_name', 'id');
 
         $parameters = [
             'donation' => $donation,
