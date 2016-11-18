@@ -9,11 +9,11 @@
         "laravel/framework": "5.3.*",
         "filp/whoops": "^2.1",
         "laravelcollective/html": "~5.3-dev",
-        "barryvdh/laravel-ide-helper": "^2.2",
-        "nesbot/carbon": "^1.21"
+        "nesbot/carbon": "^1.21",
+        "fzaninotto/faker": "^1.6",
+        "consoletvs/charts": "^2.0"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
@@ -29,7 +29,6 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
         ]
     },
     "scripts": {

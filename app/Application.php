@@ -28,33 +28,12 @@ class Application extends Model
     }
 
     public function getFundedProgressBar() {
-        if($this->amount>$this->getFundedAmount()){
-            return '<div class="text-xs-center"><strong>R'.Fundme::getCurrency($this->getFundedAmount()).'</strong> out of <strong>R'.Fundme::getCurrency($this->amount).'</strong></div><progress class="progress progress-striped progress-success progress-animated" value="'.Fundme::getCurrency($this->getFundedAmount()).'" max="'.Fundme::getCurrency($this->amount).'"></progress>';
+        $funded_amount = $this->getFundedAmount();
+
+        if($this->amount>$funded_amount && $funded_amount>=0){
+            return '<div class="text-xs-center"><strong>R'.Fundme::getCurrency($funded_amount).'</strong>/<strong>R'.Fundme::getCurrency($this->amount).'</strong></div><progress class="progress progress-striped progress-success" value="'.Fundme::getCurrency($funded_amount).'" max="'.Fundme::getCurrency($this->amount).'"></progress>';
         } else {
-            return '<div class="text-xs-center"><strong>100%</strong></div><progress class="progress progress-striped progress-success progress-animated" value="100" max="100"></progress>';
-
-        }
-
-    }
-
-    public function getStatusLabel(){
-        switch($this->application_status){
-            case 0:
-                return '<span class="tag tag-pill tag-success">'.trans('string.created').'</span>';
-            break;
-            case 1:
-                return '<span class="tag tag-pill tag-primary">'.trans('string.unfunded').'</span>';
-                break;
-            case 2:
-                return '<span class="tag tag-pill tag-warning">'.trans('string.partially_funded').'</span>';
-                break;
-            case 3:
-                return '<span class="tag tag-pill tag-success">'.trans('string.fully_funded').'</span>';
-                break;
-            default:
-                return '<span class="tag tag-pill tag-danger">'.trans('string.error').'</span>';
-                break;
-
+            return '<div class="text-xs-center"><strong>R'.Fundme::getCurrency($funded_amount).'</strong>/<strong>R'.Fundme::getCurrency($this->amount).'</strong></div><progress class="progress progress-striped progress-warning" value="100" max="100"></progress>';
         }
     }
 }

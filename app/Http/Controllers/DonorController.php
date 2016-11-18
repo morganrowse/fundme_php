@@ -15,7 +15,7 @@ class DonorController extends Controller
 {
     public function index()
     {
-        $donors = Donor::orderBy('updated_at', 'desc')->get();
+        $donors = Donor::with('administrator','administrator.user')->orderBy('updated_at', 'desc')->get();
 
         $parameters = [
             'donors' => $donors,

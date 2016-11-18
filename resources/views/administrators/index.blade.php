@@ -20,8 +20,9 @@
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
-                    <th>{{trans('string.first_name')}}</th>
-                    <th>{{trans('string.last_name')}}</th>
+                    <th></th>
+                    <th>{{trans('string.name')}}</th>
+                    <th>{{trans('string.surname')}}</th>
                     <th>{{trans('string.email')}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
                     <th>{{trans('string.actions')}}</th>
@@ -30,6 +31,7 @@
                 <tbody>
                 @forelse($administrators as $administrator)
                     <tr>
+                        <td><img src="{{action('FileController@getAvatar',$administrator->user->getAvatarURL())}}" class="avatar-match"></td>
                         <td>{{$administrator->user->first_name}}</td>
                         <td>{{$administrator->user->last_name}}</td>
                         <td>{{$administrator->user->email}}</td>

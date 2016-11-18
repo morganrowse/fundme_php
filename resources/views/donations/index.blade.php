@@ -14,19 +14,17 @@
             </div>
         </div>
 
-    </div>
 
     <br>
 
-    <div class="container-fluid">
         <div class="table-responsive">
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
-                    <th>{{trans_choice('string.funding_type',1)}}</th>
-                    <th>{{trans_choice('string.applicant',1)}}</th>
+                    <th></th>
+                    <th>{{trans('string.funding')}}</th>
                     <th>{{trans_choice('string.donor',1)}}</th>
-                    <th>{{trans('string.agreement')}}</th>
+                    <th>File</th>
                     <th class="text-right">{{trans('string.amount')}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
                     <th style="min-width: 165px">{{trans('string.actions')}}</th>
@@ -35,13 +33,14 @@
                 <tbody>
                 @forelse($donations as $donation)
                     <tr>
+                        <td><a href="{{route('applicants/view',$donation->application->applicant->id)}}"><img src="{{action('FileController@getAvatar',$donation->application->applicant->user->getAvatarURL())}}" class="avatar-match"></a></td>
                         <td>{{$donation->application->fundingType->name}}</td>
-                        <td>{{$donation->application->applicant->user->first_name}}, {{$donation->application->applicant->user->last_name}} - {{$donation->application->institution_name}}</td>
-                        <td>{{$donation->donationProfile->donor->first_name}}, {{$donation->donationProfile->donor->last_name}} - {{$donation->donationProfile->donor->organisation}}</td>
-                        <td>@if($donation->agreement!=null)
-                                <a class="btn btn-sm btn-primary" href='{{ action('FileController@getAgreement',$donation->agreement) }}' target="_blank">View attachment</a>
+                        <td><a href="{{route('donors/view',$donation->donationProfile->donor->id)}}" class="btn btn-sm btn-outline-primary">{{$donation->donationProfile->donor->first_name}}, {{$donation->donationProfile->donor->last_name}} - {{$donation->donationProfile->donor->organisation}}</a></td>
+                        <td class="text-xs-center">
+                            @if($donation->agreement!=null)
+                                <a class="btn btn-sm btn-primary" href='{{ action('FileController@getAgreement',$donation->agreement) }}' target="_blank"><i class="fa fa-paperclip"></i></a>
                             @else
-                                <em>No attachment</em>
+                                -
                             @endif
                         </td>
                         <td class="text-right">{{Fundme::getCurrency($donation->amount)}}</td>

@@ -15,7 +15,7 @@
                     <div class="form-group row{{$errors->has('application') ? ' has-danger' : '' }}">
                         {{Form::label('application',trans_choice('string.application',1),['class'=>'col-lg-4 col-form-label'])}}
                         <div class="col-lg-8">
-                            {{Form::select('application',$applications,old('application'),['class'=>'form-control','placeholder'=>trans('string.please_select'),'autofocus'])}}
+                            {{Form::select('application',$applications,\Illuminate\Support\Facades\Input::get('application'),['class'=>'form-control','placeholder'=>trans('string.please_select'),'autofocus'])}}
                             @if($errors->has('application'))
                                 <div class="form-control-feedback">{{$errors->first('application')}}</div>
                             @endif
@@ -25,7 +25,7 @@
                     <div class="form-group row{{$errors->has('donation_profile') ? ' has-danger' : '' }}">
                         {{Form::label('donation_profile',trans_choice('string.donation_profile',1),['class'=>'col-lg-4 col-form-label'])}}
                         <div class="col-lg-8">
-                            {{Form::select('donation_profile',$donation_profiles,old('donation_profile'),['class'=>'form-control','placeholder'=>trans('string.please_select')])}}
+                            {{Form::select('donation_profile',$donation_profiles,\Illuminate\Support\Facades\Input::get('donation_profile'),['class'=>'form-control','placeholder'=>trans('string.please_select')])}}
                             @if($errors->has('donation_profile'))
                                 <div class="form-control-feedback">{{$errors->first('donation_profile')}}</div>
                             @endif

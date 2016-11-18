@@ -21,7 +21,6 @@ class CreateApplicantsTable extends Migration
             $table->string('address_line_2');
             $table->string('address_line_3');
             $table->string('address_line_4');
-            $table->tinyInteger('applicant_status')->unsigned()->default(0);
 
             $table->timestamps();
             $table->softDeletes();

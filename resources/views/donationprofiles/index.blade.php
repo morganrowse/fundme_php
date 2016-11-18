@@ -20,12 +20,12 @@
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
-                    <th>{{trans('string.first_name')}}</th>
-                    <th>{{trans('string.last_name')}}</th>
+                    <th>{{trans('string.name')}}</th>
+                    <th>{{trans('string.surname')}}</th>
                     <th>{{trans('string.organisation')}}</th>
-                    <th>{{trans_choice('string.funding_type',1)}}</th>
-                    <th>{{trans_choice('string.financial_means',1)}}</th>
-                    <th class="text-right">{{trans('string.maximum_amount')}}</th>
+                    <th>{{trans('string.funding')}}</th>
+                    <th>{{trans('string.means')}}</th>
+                    <th class="text-right">{{trans('string.amount')}}</th>
                     <th class="text-right">{{trans('string.updated')}}</th>
                     <th style="min-width: 165px">{{trans('string.actions')}}</th>
                 </tr>

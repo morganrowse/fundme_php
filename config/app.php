@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'My Application',
+    'name' => 'Fundme',
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => 'development',
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', true),
+    'debug' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -179,6 +179,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
     ],
 
     /*
@@ -230,5 +231,6 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Fundme' => App\Fundme::class,
         'Carbon' => Carbon\Carbon::class,
+        'Charts' => ConsoleTVs\Charts\Charts::class,
     ],
 ];

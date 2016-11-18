@@ -11,6 +11,7 @@ class User extends Authenticatable
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $touches = ['userable'];
 
     use Notifiable;
 
@@ -35,5 +36,14 @@ class User extends Authenticatable
     public function userable()
     {
         return $this->morphTo();
+    }
+
+    public function getAvatarURL()
+    {
+        if($this->avatar!=null){
+            return $this->avatar;
+        } else {
+            return 'defaultavatars/default.png';
+        }
     }
 }

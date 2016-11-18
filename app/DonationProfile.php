@@ -22,4 +22,8 @@ class DonationProfile extends Model
     public function fundingType(){
         return $this->belongsTo('App\FundingType');
     }
+
+    public function getBalance() {
+        return $this->maximum_amount-$this->donation->sum('amount');
+    }
 }

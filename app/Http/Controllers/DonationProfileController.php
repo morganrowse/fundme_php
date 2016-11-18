@@ -15,7 +15,7 @@ class DonationProfileController extends Controller
 {
     public function index()
     {
-        $donation_profiles = DonationProfile::orderBy('updated_at', 'desc')->get();
+        $donation_profiles = DonationProfile::with('fundingType','donor')->orderBy('updated_at', 'desc')->get();
 
         $parameters = [
             'donation_profiles' => $donation_profiles,

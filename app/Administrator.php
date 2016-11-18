@@ -13,6 +13,6 @@ class Administrator extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User', 'userable_id');
+        return $this->morphOne('App\User', 'userable');
     }
 }

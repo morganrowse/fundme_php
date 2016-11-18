@@ -50,14 +50,18 @@ class AdministratorController extends Controller
         $administrator = new Administrator();
         $administrator->save();
 
+        $password = str_random(8);
+
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
-        $user->password = Hash::make(str_random(8));
+        $user->password = Hash::make($password);
         $user->userable_id = $administrator->id;
         $user->userable_type = 'App\Administrator';
         $user->save();
+
+        Fundme::sendNewUserMail($user,$password);
 
         return redirect()->route('administrators')->with('flash_success', trans('string.new_administrator_success'));
     }

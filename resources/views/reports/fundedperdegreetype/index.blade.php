@@ -1,4 +1,4 @@
-@section('title') {{trans('string.degree_type_performance')}} @endsection
+@section('title') {{trans('string.funding_type_performance')}} @endsection
 
 @extends('layouts.app')
 
@@ -10,33 +10,32 @@
                 <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
-                <p>This report shows amount funded per degree type.</p>
+                <p>This report shows amount donated per funding type.</p>
             </div>
         </div>
 
-        <br>
-
-        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div>
+            {!! $chart->render() !!}
+        </div>
 
         <br>
     </div>
 @endsection
 
+@section('extra-css')
+
+    {!! Charts::assets(['highcharts']) !!}
+
+@endsection
+
 @section('extra-js')
-    <script src="http://code.highcharts.com/highcharts.js"></script>
 
     <script>
         $(function () {
-            Highcharts.chart('container', {
+            Highcharts.chart('highcharts-container', {
                 title: {
                     text: '&nbsp;',
                     useHTML: true,
-                },
-                subtitle: {
-                    text: null,
-                },
-                xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                 },
                 yAxis: {
                     title: {
@@ -49,7 +48,7 @@
                     }]
                 },
                 tooltip: {
-                    valueSuffix: '°C'
+                    valuePrefix: 'R'
                 },
                 legend: {
                     layout: 'vertical',
@@ -58,16 +57,16 @@
                     borderWidth: 0
                 },
                 series: [{
-                    name: 'Tokyo',
+                    name: 'BSc',
                     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
                 }, {
-                    name: 'New York',
+                    name: 'BCom',
                     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
                 }, {
-                    name: 'Berlin',
+                    name: 'BA',
                     data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
                 }, {
-                    name: 'London',
+                    name: 'BEng',
                     data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
                 }]
             });
@@ -94,12 +93,6 @@
                     color: '#E0E0E3',
                     textTransform: 'uppercase',
                     fontSize: '20px'
-                }
-            },
-            subtitle: {
-                style: {
-                    color: '#E0E0E3',
-                    textTransform: 'uppercase'
                 }
             },
             xAxis: {
@@ -173,9 +166,7 @@
                 }
             },
             credits: {
-                style: {
-                    color: '#666'
-                }
+                enabled: false
             },
             labels: {
                 style: {

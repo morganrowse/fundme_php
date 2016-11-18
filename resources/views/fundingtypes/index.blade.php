@@ -21,7 +21,7 @@
                 <thead>
                 <tr>
                     <th class="sort-header sort-down">{{trans('string.name')}}</th>
-                    <th class="text-right">{{trans('string.updated')}}</th>
+                    <th class="text-right">{{trans('string.created')}}</th>
                     <th>{{trans('string.actions')}}</th>
                 </tr>
                 </thead>
@@ -29,7 +29,7 @@
                 @forelse($funding_types as $funding_type)
                     <tr>
                         <td>{{$funding_type->name}}</td>
-                        <td class="text-right">{{$funding_type->updated_at->diffForHumans()}}</td>
+                        <td class="text-right">{{$funding_type->created_at->diffForHumans()}}</td>
                         <td style="min-width: 165px">
                             {{Form::open(['route'=>array('fundingtypes/delete',$funding_type->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">

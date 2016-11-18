@@ -14,18 +14,17 @@
             </div>
         </div>
 
-        <br>
-
         <div class="table-responsive">
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th class="text-right">{{trans('string.created')}}</th>
-                    <th>{{trans('string.first_name')}}</th>
-                    <th>{{trans('string.last_name')}}</th>
+                    <th>{{trans('string.name')}}</th>
+                    <th>{{trans('string.surname')}}</th>
                     <th>{{trans('string.email')}}</th>
                     <th>{{trans('string.cellphone')}}</th>
-                    <th>{{trans('string.student_number')}}</th>
+                    <th>{{trans('string.student#')}}</th>
                     <th>{{trans('string.status')}}</th>
                     <th>{{trans('string.actions')}}</th>
                 </tr>
@@ -33,6 +32,7 @@
                 <tbody>
                 @forelse($applicants as $applicant)
                     <tr>
+                        <td><a href="{{route('applicants/view',$applicant->id)}}"><img src="{{action('FileController@getAvatar',$applicant->user->getAvatarURL())}}" class="avatar-match"></a></td>
                         <td class="text-right">{{$applicant->created_at->diffForHumans()}}</td>
                         <td>{{$applicant->user->first_name}}</td>
                         <td>{{$applicant->user->last_name}}</td>

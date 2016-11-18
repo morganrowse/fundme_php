@@ -2,12 +2,13 @@
 
 namespace App\Mail;
 
+use App\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewUserMail extends Mailable
+class NewApplication extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +17,9 @@ class NewUserMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Application $application)
     {
-        //
+        $this->application = $application;
     }
 
     /**
@@ -28,7 +29,11 @@ class NewUserMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcome')
-            ->subject('Welcome to Fundme!');
+        return $this
+            ->view('emails.newapplication')
+            ->subject('New application success!')
+            ->with([
+                'application' => $this->application,
+            ]);
     }
 }

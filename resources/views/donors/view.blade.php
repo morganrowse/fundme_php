@@ -72,7 +72,7 @@
                             {{Form::close()}}
                         </td>
                     </tr>
-                    @forelse($donation_profile->donation()->orderBy('created_at','desc')->get() as $donation)
+                    @forelse($donation_profile->donation()->with('application','application.fundingType')->orderBy('created_at','desc')->get() as $donation)
                         <tr>
                             <td><em>{{trans_choice('string.donation',1)}}</em></td>
                             <td><em>{{$donation->application->fundingType->name}}</em></td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\FundingType;
+use App\Fundme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -14,7 +15,7 @@ class ApplicationController extends Controller
 {
     public function index()
     {
-        $applications = Application::orderBy('updated_at', 'desc')->get();
+        $applications = Application::with('applicant','fundingType','applicant.user')->orderBy('updated_at', 'desc')->get();
 
         $parameters = [
             'applications' => $applications,
@@ -61,6 +62,8 @@ class ApplicationController extends Controller
         $application->financial_means = $request->input('financial_means');
         $application->amount = $request->input('amount');
         $application->save();
+
+        Fundme::sendNewApplicationMail($application);
 
         return redirect()->route('applications')->with('flash_success', trans('string.new_application_success'));
     }

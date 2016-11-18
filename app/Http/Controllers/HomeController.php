@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Application;
 use App\Fundme;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,6 +27,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->userable_type == 'App\Applicant') {
+
+            $parameters = [
+            ];
+
+            return view('home.applicant')->with($parameters);
+        }
+
+        if (Auth::user()->userable_type = 'App\Administrator') {
+            return view('home.administrator');
+        }
+
+        return "wow";
+
     }
 }

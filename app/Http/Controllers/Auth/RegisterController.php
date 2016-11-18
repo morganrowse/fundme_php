@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Applicant;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,11 @@ class RegisterController extends Controller
 {
     public function create()
     {
-        return view('auth.register');
+        if(Auth::guest()){
+            return view('auth.register');
+        } else {
+            return redirect('home');
+        }
     }
 
     public function handleCreate(Request $request)
@@ -48,7 +53,6 @@ class RegisterController extends Controller
         $applicant->address_line_4 = $request->input('address_line_4');
         $applicant->save();
 
-
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
@@ -57,6 +61,8 @@ class RegisterController extends Controller
         $user->userable_id = $applicant->id;
         $user->userable_type = 'App\Applicant';
         $user->save();
+
+        Fundme::sendNewUserMail($user);
 
         return redirect()->action('HomeController@index');
     }

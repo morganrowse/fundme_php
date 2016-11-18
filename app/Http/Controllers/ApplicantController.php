@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Applicant;
+use App\Documentation;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use Validator;
 use App\Http\Requests;
 use Carbon\Carbon;
+use App\Fundme;
 
 class ApplicantController extends Controller
 {
     public function index()
     {
-        $applicants = Applicant::orderBy('updated_at', 'desc')->get();
+        $applicants = Applicant::with('user')->orderBy('updated_at', 'desc')->get();
 
         $parameters = [
             'applicants' => $applicants,
@@ -63,21 +67,29 @@ class ApplicantController extends Controller
         $applicant->save();
 
 
+        $password = str_random(8);
+
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
-        $user->password = Hash::make(str_random(8));
+        $user->password = Hash::make($password);
         $user->userable_id = $applicant->id;
         $user->userable_type = 'App\Applicant';
         $user->save();
 
+        Fundme::sendNewUserMail($user,$password);
+
         return redirect()->route('applicants')->with('flash_success', trans('string.new_applicant_success'));
     }
 
-    public function view($id)
+    public function view(Applicant $applicant)
     {
-        //
+        $parameters = [
+            'applicant' => $applicant,
+        ];
+
+        return view('applicants.view')->with($parameters);
     }
 
     public function edit(Applicant $applicant)
@@ -145,5 +157,35 @@ class ApplicantController extends Controller
         } else {
             return "No new applicants.";
         }
+    }
+
+    public function handleDocumentation(Request $request, Applicant $applicant)
+    {
+        $post = $request->all();
+
+        $rules = [
+            'documentation' => 'required|file|mimes:jpeg,bmp,png,pdf',
+        ];
+        $valid = Validator::make($post, $rules);
+
+        if (!$valid->passes()) {
+            return Redirect::to(URL::previous() . "#profile")->withErrors($valid)->withInput();
+        }
+
+        $path = $request->file('documentation')->store('documentations');
+
+        $documentation = new Documentation();
+        $documentation->applicant_id = $applicant->id;
+        $documentation->attachment = $path;
+        $documentation->save();
+
+        return Redirect::to(URL::previous() . "#profile")->with('flash_success', trans('string.new_documentation_success'));
+    }
+
+    public function handleDocumentationDelete(Documentation $documentation)
+    {
+        $documentation->delete();
+
+        return Redirect::to(URL::previous() . "#profile")->with('flash_success', trans('string.delete_documentation_success'));
     }
 }

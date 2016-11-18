@@ -9,6 +9,30 @@
                 <h2 class="card-title">@yield('title')</h2>
             </div>
             <div class="card-block">
+                <div class="card-deck-wrapper">
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="card-block">
+                                <h4>To login as an Administrator</h4>
+                                <ul>
+                                    <li>email: admin@fundme.co.za</li>
+                                    <li>password: 1234</li>
+                                </ul>
+                                You can then create your own account once logged in.
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-block">
+                                <h4>To login as an Applicant</h4>
+                                <ul>
+                                    <li>email: applicant@fundme.co.za</li>
+                                    <li>password: 1234</li>
+                                </ul>
+                                or register an account <a href="{{route('register')}}">here</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-6 offset-lg-3">
                     {{Form::open(['action'=>'Auth\LoginController@handleLogin','method'=>'POST'])}}
                     {{Form::hidden('_token',csrf_token())}}

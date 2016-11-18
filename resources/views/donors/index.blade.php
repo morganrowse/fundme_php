@@ -20,8 +20,8 @@
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
-                    <th>{{trans('string.first_name')}}</th>
-                    <th>{{trans('string.last_name')}}</th>
+                    <th>{{trans('string.name')}}</th>
+                    <th>{{trans('string.surname')}}</th>
                     <th>{{trans('string.email')}}</th>
                     <th>{{trans('string.organisation')}}</th>
                     <th>{{trans_choice('string.administrator',1)}}</th>

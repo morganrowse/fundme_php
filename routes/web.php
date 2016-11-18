@@ -9,16 +9,33 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::get('register', 'Auth\RegisterController@create')->name('register');
 Route::post('register', 'Auth\RegisterController@handleCreate');
 
+
+Route::model('user', 'App\User');
+Route::get('changepassword', 'UserController@newPassword')->name('changepassword');
+Route::post('changepassword/{user}', 'UserController@handleNewPassword');
+
+Route::get('changeavatar', 'UserController@changeAvatar')->name('changeavatar');
+Route::post('changeavatar/{user}', 'UserController@handleAvatar');
+
 Route::get('login', 'Auth\LoginController@login')->name('login');
 Route::post('login', 'Auth\LoginController@handleLogin');
 
 Route::get('logout', 'Auth\LogoutController@logout')->name('logout');
 
-Route::group(array('prefix' => 'storage', 'before' => 'auth'), function () {
-    Route::get('app/{filename}', 'FileController@getAgreement')->where('filename', '^[^/]+$');
+Route::group(['prefix' => 'admin','middleware'=>'administrator'], function () {
+    Route::get('', 'AdminController@index')->name('admin');
+
+    Route::post('applicants', 'AdminController@handleApplicants');
+
 });
 
-Route::group(['prefix' => 'reports'], function () {
+Route::group(array('prefix' => 'storage', 'before' => 'auth'), function () {
+    Route::get('app/{filename}', 'FileController@getAgreement')->where('filename', '^[^/]+$');
+    Route::get('app/{filename}', 'FileController@getDocumentation')->where('filename', '^[^/]+$');
+    Route::get('app/{filename}', 'FileController@getAvatar')->where('filename', '^[^/]+$');
+});
+
+Route::group(['prefix' => 'reports','middleware'=>'administrator'], function () {
     Route::get('outstandingapplicants', 'ReportController@outstandingApplicants')->name('outstandingapplicants');
     Route::get('outstandingapplications', 'ReportController@outstandingApplications')->name('outstandingapplications');
     Route::get('fundedperdegreetype', 'ReportController@fundedPerDegreeType')->name('fundedperdegreetype');
@@ -41,8 +58,10 @@ Route::group(['prefix' => 'applications'], function () {
 
 Route::group(['prefix' => 'applicants'], function () {
     Route::model('applicant', 'App\Applicant');
+    Route::model('documentation', 'App\Documentation');
 
     Route::get('', 'ApplicantController@index')->name('applicants');
+    Route::get('view/{applicant}', 'ApplicantController@view')->name('applicants/view');
 
     Route::get('create', 'ApplicantController@create')->name('applicants/create');
     Route::post('create', 'ApplicantController@handleCreate');
@@ -51,9 +70,12 @@ Route::group(['prefix' => 'applicants'], function () {
     Route::post('edit/{applicant}', 'ApplicantController@handleEdit');
 
     Route::post('delete/{applicant}', 'ApplicantController@handleDelete')->name('applicants/delete');
+
+    Route::post('documentation/{applicant}', 'ApplicantController@handleDocumentation')->name('applicants/documentation');
+    Route::post('documentation/delete/{documentation}', 'ApplicantController@handleDocumentationDelete')->name('applicants/documentation/delete');
 });
 
-Route::group(['prefix' => 'administrators'], function () {
+Route::group(['prefix' => 'administrators','middleware'=>'administrator'], function () {
     Route::model('administrator', 'App\Administrator');
 
     Route::get('', 'AdministratorController@index')->name('administrators');
@@ -67,7 +89,7 @@ Route::group(['prefix' => 'administrators'], function () {
     Route::post('delete/{administrator}', 'AdministratorController@handleDelete')->name('administrators/delete');
 });
 
-Route::group(['prefix' => 'donors'], function () {
+Route::group(['prefix' => 'donors','middleware'=>'administrator'], function () {
     Route::model('donor', 'App\Donor');
 
     Route::get('', 'DonorController@index')->name('donors');
@@ -82,7 +104,7 @@ Route::group(['prefix' => 'donors'], function () {
     Route::post('delete/{donor}', 'DonorController@handleDelete')->name('donors/delete');
 });
 
-Route::group(['prefix' => 'fundingtypes'], function () {
+Route::group(['prefix' => 'fundingtypes','middleware'=>'administrator'], function () {
     Route::model('funding_type', 'App\FundingType');
 
     Route::get('', 'FundingTypeController@index')->name('fundingtypes');
@@ -96,7 +118,7 @@ Route::group(['prefix' => 'fundingtypes'], function () {
     Route::post('delete/{funding_type}', 'FundingTypeController@handleDelete')->name('fundingtypes/delete');
 });
 
-Route::group(['prefix' => 'donationprofiles'], function () {
+Route::group(['prefix' => 'donationprofiles','middleware'=>'administrator'], function () {
     Route::model('donation_profile', 'App\DonationProfile');
 
     Route::get('', 'DonationProfileController@index')->name('donationprofiles');
@@ -110,10 +132,11 @@ Route::group(['prefix' => 'donationprofiles'], function () {
     Route::post('delete/{donation_profile}', 'DonationProfileController@handleDelete')->name('donationprofiles/delete');
 });
 
-Route::group(['prefix' => 'donations'], function () {
+Route::group(['prefix' => 'donations','middleware'=>'administrator'], function () {
     Route::model('donation', 'App\Donation');
 
     Route::get('', 'DonationController@index')->name('donations');
+    Route::get('match', 'DonationController@match')->name('donations/match');
 
     Route::get('create', 'DonationController@create')->name('donations/create');
     Route::post('create', 'DonationController@handleCreate');

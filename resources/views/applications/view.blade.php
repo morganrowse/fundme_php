@@ -10,9 +10,17 @@
             </div>
             <div class="card-block">
                 <div class="col-lg-8 offset-lg-2">
+                    <div class="avatar-main-div">
+                        <a href="{{route('applicants/view',$application->applicant->id)}}"><img src="{{action('FileController@getAvatar',$application->applicant->user->getAvatarURL())}}" class="fa avatar-main"></a>
+                    </div>
+
+                    <div class="applicant-header">
+                        <h1><a href="{{route('applicants/view',$application->applicant->id)}}">{{$application->applicant->user->first_name}} {{$application->applicant->user->last_name}}</a></h1>
+                        <p>{!! $application->applicant->user->userable->getStatusLabel() !!}</p>
+                    </div>
+
 
                     <p>
-                    <h4>{{trans_choice('string.applicant',1)}}: <a href="#">{{$application->applicant->user->first_name}}, {{$application->applicant->user->last_name}}</a></h4>
                     {{trans_choice('string.funding_type',1)}}: <strong><a href="#">{{$application->fundingType->name}}</a></strong>
                     <br>
                     {{trans('string.institution_name')}}: <strong>{{$application->institution_name}}</strong>
@@ -45,7 +53,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($application->donations as $donation)
+                @forelse($application->donations()->with('donationProfile.donor')->get() as $donation)
                     <tr>
                         <td>{{$donation->donationProfile->donor->first_name}}</td>
                         <td>{{$donation->donationProfile->donor->last_name}}</td>

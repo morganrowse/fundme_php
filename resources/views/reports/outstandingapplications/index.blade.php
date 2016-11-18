@@ -14,36 +14,30 @@
             </div>
         </div>
 
-    </div>
-
-    <br>
-
-    <div class="container-fluid">
-
         <div class="table-responsive">
             <table class="table table-inverse table-striped table-hover" id="main-table">
                 <thead>
                 <tr>
+                    <th></th>
                     <th>{{trans('string.created')}}</th>
-                    <th>{{trans_choice('string.funding_type',1)}}</th>
-                    <th>{{trans('string.institution_name')}}</th>
-                    <th>{{trans('string.degree_type')}}</th>
-                    <th>{{trans('string.financial_means')}}</th>
-                    <th style="min-width: 220px">{{trans('string.amount')}}</th>
-                    <th>{{trans('string.status')}}</th>
-                    <th style="min-width: 236px">{{trans('string.actions')}}</th>
+                    <th>{{trans('string.funding')}}</th>
+                    <th>{{trans('string.institution')}}</th>
+                    <th>{{trans('string.degree')}}</th>
+                    <th>{{trans('string.means')}}</th>
+                    <th>{{trans('string.amount')}}</th>
+                    <th class="button-3-group">{{trans('string.actions')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($applications as $application)
                     <tr>
+                        <td><a href="{{route('applicants/view',$application->applicant->id)}}"><img src="{{action('FileController@getAvatar',$application->applicant->user->getAvatarURL())}}" class="avatar-match"></a></td>
                         <td>{{$application->created_at->diffForHumans()}}</td>
                         <td>{{$application->fundingType->name}}</td>
                         <td>{{$application->institution_name}}</td>
                         <td>{{$application->degree_type}}</td>
                         <td>{{$application->financial_means}}</td>
                         <td>{!! $application->getFundedProgressBar() !!}</td>
-                        <td>{!!$application->getStatusLabel()!!}</td>
                         <td>
                             {{Form::open(['route'=>array('applications/delete',$application->id),'method'=>'POST'])}}
                             <div class="btn-toolbar">

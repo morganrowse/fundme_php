@@ -10,6 +10,7 @@ class Donation extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $touches = ['application'];
 
     public function application(){
         return $this->belongsTo('App\Application');
