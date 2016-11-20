@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Applicant;
 use App\Application;
 use App\FundingType;
 use App\Fundme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Requests;
 use Carbon\Carbon;
@@ -26,6 +28,7 @@ class ApplicationController extends Controller
 
     public function create()
     {
+
         $funding_types = FundingType::pluck('name', 'id');
         $financial_means = ['A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E'];
 
@@ -33,6 +36,15 @@ class ApplicationController extends Controller
             'funding_types' => $funding_types,
             'financial_means' => $financial_means,
         ];
+
+        if (Auth::user()->userable_type=='App\Administrator') {
+            $applicants = Applicant::join('users', function ($join) {
+                $join->on('applicants.id', '=', 'users.userable_id')->where('users.userable_type', '=', 'App\Applicant');
+            })->orderBy('users.email', 'desc')
+                ->select('applicants.id AS id', DB::raw('CONCAT(users.email," - ", users.first_name, " ", users.last_name) AS full_name'))
+                ->pluck('full_name','id');
+            $parameters['applicants'] = $applicants;
+        }
 
         return view('applications.create')->with($parameters);
     }
@@ -48,6 +60,11 @@ class ApplicationController extends Controller
             'financial_means' => 'required|in:A,B,C,D,E',
             'amount' => 'required|numeric|min:0',
         ];
+
+        if (Auth::user()->userable_type=='App\Administrator') {
+            $rules['applicant'] = 'required|integer|exists:applicants,id';
+        }
+
         $valid = Validator::make($post, $rules);
 
         if (!$valid->passes()) {
@@ -55,7 +72,13 @@ class ApplicationController extends Controller
         }
 
         $application = new Application();
-        $application->applicant_id = Auth::user()->userable->id;
+
+        if (Auth::user()->userable_type=='App\Administrator') {
+            $application->applicant_id = $request->input('applicant');
+        } else {
+            $application->applicant_id = Auth::user()->userable->id;
+        }
+
         $application->funding_type_id = $request->input('funding_type');
         $application->institution_name = $request->input('institution_name');
         $application->degree_type = $request->input('degree_type');
@@ -65,7 +88,11 @@ class ApplicationController extends Controller
 
         Fundme::sendNewApplicationMail($application);
 
-        return redirect()->route('applications')->with('flash_success', trans('string.new_application_success'));
+        if (Auth::user()->userable_type=='App\Administrator') {
+            return redirect()->route('applications')->with('flash_success', trans('string.new_application_success'));
+        } else {
+            return redirect()->route('home')->with('flash_success', trans('string.new_application_success'));
+        }
     }
 
     public function view(Application $application)

@@ -66,7 +66,6 @@ class ApplicantController extends Controller
         $applicant->address_line_4 = $request->input('address_line_4');
         $applicant->save();
 
-
         $password = str_random(8);
 
         $user = new User();

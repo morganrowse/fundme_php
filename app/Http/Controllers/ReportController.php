@@ -75,13 +75,12 @@ class ReportController extends Controller
         }
     }
 
-    public function fundedPerDegreeType()
+    public function amountPerFundingType()
     {
 
         $number_of_months = 6;
 
         $donations = Donation::with('application.fundingType')->where('donations.created_at', '>', Carbon::now()->subMonths(6))->join('applications', 'donations.id', '=', 'applications.id')->groupBy('funding_type_id')->selectRaw('sum(donations.amount) as sum, funding_type_id')->orderBy('sum', 'desc')->limit($number_of_months)->get();
-
 
         $months = [];
 
@@ -90,11 +89,9 @@ class ReportController extends Controller
         for ($count = 0; $count < $number_of_months; $count++) {
             $month = Carbon::now()->subMonths($number_of_months - $count);
 
-
             foreach ($donations as $donation) {
                 $funding_type = FundingType::find($donation->funding_type_id);
                 $amount = Donation::whereBetween('donations.created_at', [$month->copy()->startOfMonth(),$month->copy()->endOfMonth()])->join('applications', 'donations.id', '=', 'applications.id')->where('applications.funding_type_id', $donation->funding_type_id)->sum('donations.amount');
-
 
                 if($count==0){
                     $funding_types[$funding_type->name] =[];
@@ -102,14 +99,9 @@ class ReportController extends Controller
                 } else {
                     array_push($funding_types[$funding_type->name], $amount);
                 }
-
-
             }
-
             array_push($months, $month->formatLocalized('%B'));
-
         }
-
 
         $chart = Charts::multi('line', 'highcharts')
             ->setColors(['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee','#55BF3B', '#DF5353', '#7798BF', '#aaeeee'])
@@ -123,11 +115,33 @@ class ReportController extends Controller
             $chart->setDataset($key, $funding_type);
         }
 
+        $fake_chart = Charts::multi('line', 'highcharts')
+            ->setLabels(['May','June','July','August','September','October'])
+            ->setDataset('Food', ['25678','28245','29658','25678','25678','23110'])
+            ->setDataset('Housing', ['15321','18385','15995','9597','15355','16276'])
+            ->setDataset('Transport', ['5020','6768','6892','7020','6923','5723'])
+            ->setDataset('Data', ['200','225','300','400','600','750']);
+
         $parameters = [
-            'donations' => $donations,
-            'chart' => $chart,
+            'chart' => $fake_chart,
         ];
 
-        return view('reports.fundedperdegreetype.index')->with($parameters);
+        return view('reports.amountperfundingtype.index')->with($parameters);
+    }
+
+    public function actionsPerAdministrator()
+    {
+        $fake_chart = Charts::multi('line', 'highcharts')
+            ->setLabels(['23 Oct','30 Oct','6 Nov','13 Nov','20 Nov','27 Nov'])
+            ->setDataset('John Smith', ['32','34','29','31','32','23'])
+            ->setDataset('Average', ['24','26','23','21','24','20'])
+            ->setDataset('Mary Jane', ['4','5','8','0','1','2']);
+
+
+        $parameters = [
+            'chart' => $fake_chart,
+        ];
+
+        return view('reports.actionsperadministrator.index')->with($parameters);
     }
 }

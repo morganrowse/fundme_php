@@ -40,7 +40,8 @@
                         <ul>
                             <li><a href="{{route('outstandingapplicants')}}">{{trans('string.outstanding_applicants')}}</a> {!! \App\Http\Controllers\ReportController::getOutstandingApplicantsDashboardString() !!}</li>
                             <li><a href="{{route('outstandingapplications')}}">{{trans('string.outstanding_applications')}}</a> {!! \App\Http\Controllers\ReportController::getOutstandingApplicationsDashboardString() !!}</li>
-                            <li><a href="{{route('fundedperdegreetype')}}">{{trans('string.funding_type_performance')}}</a></li>
+                            <li><a href="{{route('amountperfundingtype')}}">{{trans('string.funding_type_performance')}}</a></li>
+                            <li><a href="{{route('actionsperadministrator')}}">{{trans('string.actions_per_administrator')}}</a></li>
                         </ul>
                     </div>
                 </div>

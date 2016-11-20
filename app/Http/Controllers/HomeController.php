@@ -31,15 +31,12 @@ class HomeController extends Controller
 
             $parameters = [
             ];
-
             return view('home.applicant')->with($parameters);
         }
 
         if (Auth::user()->userable_type = 'App\Administrator') {
             return view('home.administrator');
         }
-
-        return "wow";
 
     }
 }

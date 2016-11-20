@@ -12,6 +12,18 @@
                 <div class="col-lg-8 offset-lg-2">
                     {{Form::open(['action'=>'ApplicationController@handleCreate','method'=>'POST'])}}
 
+                    @if(Auth::user()->userable_type=='App\Administrator')
+                        <div class="form-group row{{$errors->has('applicant') ? ' has-danger' : '' }}">
+                            {{Form::label('applicant',trans_choice('string.applicant',1),['class'=>'col-lg-4 col-form-label'])}}
+                            <div class="col-lg-8">
+                                {{Form::select('applicant',$applicants,\Illuminate\Support\Facades\Input::get('applicant'),['class'=>'form-control','placeholder'=>trans('string.please_select'),'autofocus'])}}
+                                @if($errors->has('applicant'))
+                                    <div class="form-control-feedback">{{$errors->first('applicant')}}</div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="form-group row{{$errors->has('funding_type') ? ' has-danger' : '' }}">
                         {{Form::label('funding_type',trans_choice('string.funding_type',1),['class'=>'col-lg-4 col-form-label'])}}
                         <div class="col-lg-8">

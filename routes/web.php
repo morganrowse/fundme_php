@@ -38,7 +38,8 @@ Route::group(array('prefix' => 'storage', 'before' => 'auth'), function () {
 Route::group(['prefix' => 'reports','middleware'=>'administrator'], function () {
     Route::get('outstandingapplicants', 'ReportController@outstandingApplicants')->name('outstandingapplicants');
     Route::get('outstandingapplications', 'ReportController@outstandingApplications')->name('outstandingapplications');
-    Route::get('fundedperdegreetype', 'ReportController@fundedPerDegreeType')->name('fundedperdegreetype');
+    Route::get('amountperfundingtype', 'ReportController@amountPerFundingType')->name('amountperfundingtype');
+    Route::get('actionsperadministrator', 'ReportController@actionsPerAdministrator')->name('actionsperadministrator');
 });
 
 Route::group(['prefix' => 'applications'], function () {

@@ -122,7 +122,7 @@ return [
     'old_password' => 'Old password',
     'avatar' => 'avatar',
     'view_applicant' => 'View applicant',
-    '' => '',
+    'actions_per_administrator' => 'Actions per administrator',
     '' => '',
     '' => '',
     '' => '',

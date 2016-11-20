@@ -65,7 +65,15 @@
                     <table class="table table-inverse table-striped table-hover">
                         <thead>
                         <tr>
-                            <td colspan="100%"><a href="{{route('applications/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a><br><br></td>
+
+                            <td colspan="100%">
+                                @if(Auth::user()->userable_type=='App\Administrator')
+                                    <a href="{{route('applications/create',array('applicant'=>$applicant->id))}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a>
+                                @else
+                                    <a href="{{route('applications/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a>
+                                @endif
+                                <br><br>
+                            </td>
                         </tr>
                         <tr>
                             <th>{{trans('string.funding')}}</th>

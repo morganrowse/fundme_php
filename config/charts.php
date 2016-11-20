@@ -10,7 +10,7 @@ return [
         'type'          => 'line',
         'library'       => 'google',
         'element_label' => 'Element',
-        'title'         => 'My chart',
+        'title'         => null,
         'height'        => 400,
         'width'         => 500,
         'responsive'    => true,
