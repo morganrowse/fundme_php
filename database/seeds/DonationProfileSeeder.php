@@ -11,7 +11,7 @@ class DonationProfileSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\DonationProfile::class, 5)
+        factory(App\DonationProfile::class, 15)
             ->create();
     }
 }

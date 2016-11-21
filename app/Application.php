@@ -31,9 +31,9 @@ class Application extends Model
         $funded_amount = $this->getFundedAmount();
 
         if($this->amount>$funded_amount && $funded_amount>=0){
-            return '<div class="text-xs-center"><strong>R'.Fundme::getCurrency($funded_amount).'</strong>/<strong>R'.Fundme::getCurrency($this->amount).'</strong></div><progress class="progress progress-striped progress-success" value="'.Fundme::getCurrency($funded_amount).'" max="'.Fundme::getCurrency($this->amount).'"></progress>';
+            return '<div class="text-xs-center">R'.number_format($funded_amount, 2, '.', ' ').' / R'.number_format($this->amount, 2, '.', ' ').'</div><progress class="progress progress-striped progress-success" value="'.Fundme::getCurrency($funded_amount).'" max="'.Fundme::getCurrency($this->amount).'"></progress>';
         } else {
-            return '<div class="text-xs-center"><strong>R'.Fundme::getCurrency($funded_amount).'</strong>/<strong>R'.Fundme::getCurrency($this->amount).'</strong></div><progress class="progress progress-striped progress-warning" value="100" max="100"></progress>';
+            return '<div class="text-xs-center">R'.number_format($funded_amount, 2, '.', ' ').' / R'.number_format($this->amount, 2, '.', ' ').'</div><progress class="progress progress-striped progress-warning" value="100" max="100"></progress>';
         }
     }
 }

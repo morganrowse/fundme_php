@@ -17,7 +17,7 @@ class ApplicationController extends Controller
 {
     public function index()
     {
-        $applications = Application::with('applicant','fundingType','applicant.user')->orderBy('updated_at', 'desc')->get();
+        $applications = Application::with('applicant', 'fundingType', 'applicant.user')->orderBy('updated_at', 'desc')->get();
 
         $parameters = [
             'applications' => $applications,
@@ -37,12 +37,12 @@ class ApplicationController extends Controller
             'financial_means' => $financial_means,
         ];
 
-        if (Auth::user()->userable_type=='App\Administrator') {
+        if (Auth::user()->userable_type == 'App\Administrator') {
             $applicants = Applicant::join('users', function ($join) {
                 $join->on('applicants.id', '=', 'users.userable_id')->where('users.userable_type', '=', 'App\Applicant');
             })->orderBy('users.email', 'desc')
                 ->select('applicants.id AS id', DB::raw('CONCAT(users.email," - ", users.first_name, " ", users.last_name) AS full_name'))
-                ->pluck('full_name','id');
+                ->pluck('full_name', 'id');
             $parameters['applicants'] = $applicants;
         }
 
@@ -61,7 +61,7 @@ class ApplicationController extends Controller
             'amount' => 'required|numeric|min:0',
         ];
 
-        if (Auth::user()->userable_type=='App\Administrator') {
+        if (Auth::user()->userable_type == 'App\Administrator') {
             $rules['applicant'] = 'required|integer|exists:applicants,id';
         }
 
@@ -73,7 +73,7 @@ class ApplicationController extends Controller
 
         $application = new Application();
 
-        if (Auth::user()->userable_type=='App\Administrator') {
+        if (Auth::user()->userable_type == 'App\Administrator') {
             $application->applicant_id = $request->input('applicant');
         } else {
             $application->applicant_id = Auth::user()->userable->id;
@@ -88,7 +88,7 @@ class ApplicationController extends Controller
 
         Fundme::sendNewApplicationMail($application);
 
-        if (Auth::user()->userable_type=='App\Administrator') {
+        if (Auth::user()->userable_type == 'App\Administrator') {
             return redirect()->route('applications')->with('flash_success', trans('string.new_application_success'));
         } else {
             return redirect()->route('home')->with('flash_success', trans('string.new_application_success'));
@@ -148,16 +148,21 @@ class ApplicationController extends Controller
 
     public function handleDelete(Application $application)
     {
-        $application->delete();
+        if ($application->donations()->count() == 0) {
 
-        return redirect()->route('applications')->with('flash_success', trans('string.delete_application_success'));
+            $application->delete();
+
+            return redirect()->back()->with('flash_success', trans('string.delete_application_success'));
+        } else {
+            return redirect()->back()->with('flash_danger', 'Delete failed. Application has donations.');
+        }
     }
 
     public static function getDashboardString()
     {
-        $new_count = Application::where('created_at','>', Carbon::now()->subDay())->count();
-        if($new_count!=0){
-            return $new_count.' new '.trans_choice('string.application',$new_count).'.';
+        $new_count = Application::where('created_at', '>', Carbon::now()->subDay())->count();
+        if ($new_count != 0) {
+            return $new_count . ' new ' . trans_choice('string.application', $new_count) . '.';
         } else {
             return "No new applications.";
         }

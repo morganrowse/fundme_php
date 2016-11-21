@@ -11,7 +11,7 @@ class DonorSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Donor::class, 3)
+        factory(App\Donor::class, 9)
             ->create();
     }
 }

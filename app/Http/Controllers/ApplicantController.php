@@ -67,12 +67,15 @@ class ApplicantController extends Controller
         $applicant->save();
 
         $password = str_random(8);
+        $files = \Illuminate\Support\Facades\Storage::files('defaultavatars');
+        $file = $files[rand(0,count($files))];
 
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->password = Hash::make($password);
+        $user->avatar = $file;
         $user->userable_id = $applicant->id;
         $user->userable_type = 'App\Applicant';
         $user->save();
@@ -145,7 +148,7 @@ class ApplicantController extends Controller
         $applicant->user->delete();
         $applicant->delete();
 
-        return redirect()->route('applicants')->with('flash_success', trans('string.delete_applicant_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_applicant_success'));
     }
 
     public static function getDashboardString()

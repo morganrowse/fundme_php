@@ -129,7 +129,7 @@ class DonorController extends Controller
     {
         $donor->delete();
 
-        return redirect()->route('donors')->with('flash_success', trans('string.delete_donor_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_donor_success'));
     }
 
     public static function getDashboardString()

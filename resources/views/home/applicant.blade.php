@@ -35,7 +35,15 @@
                     <table class="table table-inverse table-striped table-hover">
                         <thead>
                         <tr>
-                            <td colspan="100%"><a href="{{route('applications/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a><br><br></td>
+                            <td colspan="100%">
+                                @if(Auth::user()->userable->getStatus()=='green')
+                                    <a href="{{route('applications/create')}}" class="btn btn-success"><i class="fa fa-plus"></i> {{trans('string.new_application')}}</a>
+                                    <br><br>
+                                @else
+                                    <p>To create an application please upload documentation first</p>
+                                @endif
+
+                                </td>
                         </tr>
                         <tr>
                             <th>{{trans('string.funding')}}</th>

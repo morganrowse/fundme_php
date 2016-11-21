@@ -75,3 +75,20 @@
         </div>
     </div>
 @endsection
+
+@section('extra-css')
+    <link rel="stylesheet" href="{{asset('public/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/select2-bootstrap.min.css')}}">
+@endsection
+
+@section('extra-js')
+    <script src="{{asset('public/js/select2.min.js')}}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#application, #donation_profile").select2({
+                theme: "bootstrap"
+            });
+        });
+    </script>
+@endsection

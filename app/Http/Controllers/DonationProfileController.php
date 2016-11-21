@@ -127,7 +127,7 @@ class DonationProfileController extends Controller
     {
         $donation_profile->delete();
 
-        return redirect()->route('donationprofiles')->with('flash_success', trans('string.delete_donation_profile_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_donation_profile_success'));
     }
 
     public static function getDashboardString()

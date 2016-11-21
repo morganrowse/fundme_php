@@ -11,7 +11,7 @@ class DocumentationSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Documentation::class, 7)
+        factory(App\Documentation::class, 21)
             ->create();
     }
 }

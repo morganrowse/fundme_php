@@ -88,7 +88,7 @@ class FundingTypeController extends Controller
     {
         $funding_type->delete();
 
-        return redirect()->route('fundingtypes')->with('flash_success', trans('string.delete_funding_type_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_funding_type_success'));
     }
 
     public static function getDashboardString()

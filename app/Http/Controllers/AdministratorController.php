@@ -110,7 +110,7 @@ class AdministratorController extends Controller
         $administrator->user->delete();
         $administrator->delete();
 
-        return redirect()->route('administrators')->with('flash_success', trans('string.delete_administrator_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_administrator_success'));
     }
 
     public static function getDashboardString()

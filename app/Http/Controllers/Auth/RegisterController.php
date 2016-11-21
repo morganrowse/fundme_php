@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Applicant;
+use App\Fundme;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,16 +54,22 @@ class RegisterController extends Controller
         $applicant->address_line_4 = $request->input('address_line_4');
         $applicant->save();
 
+        $files = \Illuminate\Support\Facades\Storage::files('defaultavatars');
+        $file = $files[rand(0,count($files))];
+
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
+        $user->avatar = $file;
         $user->userable_id = $applicant->id;
         $user->userable_type = 'App\Applicant';
         $user->save();
 
         Fundme::sendNewUserMail($user);
+
+        Auth::login($user);
 
         return redirect()->action('HomeController@index');
     }

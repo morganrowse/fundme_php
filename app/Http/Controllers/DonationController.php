@@ -172,7 +172,7 @@ class DonationController extends Controller
     {
         $donation->delete();
 
-        return redirect()->route('donations')->with('flash_success', trans('string.delete_donation_success'));
+        return redirect()->back()->with('flash_success', trans('string.delete_donation_success'));
     }
 
     public static function getDashboardString()

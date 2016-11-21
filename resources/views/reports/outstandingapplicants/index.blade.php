@@ -24,7 +24,6 @@
                     <th>{{trans('string.surname')}}</th>
                     <th>{{trans('string.email')}}</th>
                     <th>{{trans('string.cellphone')}}</th>
-                    <th>{{trans('string.student#')}}</th>
                     <th>{{trans('string.status')}}</th>
                     <th>{{trans('string.actions')}}</th>
                 </tr>
@@ -38,7 +37,6 @@
                         <td>{{$applicant->user->last_name}}</td>
                         <td>{{$applicant->user->email}}</td>
                         <td>{{$applicant->cellphone}}</td>
-                        <td>{{$applicant->student_number}}</td>
                         <td>{!!$applicant->getStatusLabel()!!}</td>
                         <td style="min-width: 165px">
                             {{Form::open(['route'=>array('applicants/delete',$applicant->id),'method'=>'POST'])}}
